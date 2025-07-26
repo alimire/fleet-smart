@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sample fleet vehicles -->
+        <record id="vehicle_tesla_001" model="fleet.smart.vehicle">
+            <field name="license_plate">EV-001</field>
+            <field name="model">Tesla Model 3</field>
+            <field name="driver">John Doe</field>
+            <field name="battery_level">85.0</field>
+            <field name="location">Downtown Office</field>
+            <field name="status">available</field>
+        </record>
+        
+        <record id="vehicle_nissan_002" model="fleet.smart.vehicle">
+            <field name="license_plate">EV-002</field>
+            <field name="model">Nissan Leaf</field>
+            <field name="driver">Jane Smith</field>
+            <field name="battery_level">92.0</field>
+            <field name="location">Warehouse</field>
+            <field name="status">in_use</field>
+        </record>
+    </data>
+</odoo>

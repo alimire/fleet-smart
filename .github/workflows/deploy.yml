@@ -1,0 +1,186 @@
+name: Deploy Fleet Smart to EC2
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+
+env:
+  APP_NAME: fleet-smart-app
+  DEPLOY_PATH: /home/ubuntu/fleet-smart-app
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Test Docker build
+      run: |
+        docker build -t fleet-smart-test .
+        echo "✅ Docker build successful"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Setup SSH
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key
+        chmod 600 private_key
+
+    - name: Test EC2 connection
+      env:
+        HOSTNAME: ${{ secrets.EC2_HOST }}
+        USER_NAME: ${{ secrets.EC2_USER }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i private_key ${USER_NAME}@${HOSTNAME} 'echo "✅ EC2 connection successful"'
+
+    - name: Deploy application
+      env:
+        HOSTNAME: ${{ secrets.EC2_HOST }}
+        USER_NAME: ${{ secrets.EC2_USER }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} << 'EOF'
+          set -e
+          
+          echo "🚀 Starting Fleet Smart deployment..."
+          
+          # Update system packages
+          sudo apt-get update -qq
+          
+          # Install required packages
+          if ! command -v docker &> /dev/null; then
+            echo "📦 Installing Docker..."
+            sudo apt-get install -y docker.io docker-compose git curl
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo usermod -aG docker $USER
+            
+            # Install Docker Compose v2
+            sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+          fi
+          
+          # Create deployment directory
+          mkdir -p ${{ env.DEPLOY_PATH }}
+          cd ${{ env.DEPLOY_PATH }}
+          
+          # Clone or update repository
+          if [ -d ".git" ]; then
+            echo "📥 Updating existing repository..."
+            git fetch origin
+            git reset --hard origin/main
+          else
+            echo "📥 Cloning repository..."
+            git clone https://github.com/${{ github.repository }}.git .
+          fi
+          
+          # Stop existing containers gracefully
+          echo "🛑 Stopping existing containers..."
+          sudo docker-compose down --timeout 30 || true
+          
+          # Clean up old images
+          echo "🧹 Cleaning up old Docker images..."
+          sudo docker system prune -f || true
+          
+          # Build and start new containers
+          echo "🏗️ Building and starting containers..."
+          sudo docker-compose up -d --build --force-recreate
+          
+          # Wait for services to be ready
+          echo "⏳ Waiting for services to start..."
+          sleep 45
+          
+          # Health check
+          echo "🏥 Performing health check..."
+          for i in {1..12}; do
+            if curl -f http://localhost:8069 > /dev/null 2>&1; then
+              echo "✅ Fleet Smart is running successfully!"
+              break
+            else
+              echo "⏳ Waiting for Odoo to start... (attempt $i/12)"
+              sleep 10
+            fi
+          done
+          
+          # Final status check
+          echo "📊 Container status:"
+          sudo docker-compose ps
+          
+          # Show resource usage
+          echo "💾 System resources:"
+          df -h / | tail -1
+          free -h | grep Mem
+          
+          echo "🎉 Deployment completed successfully!"
+          echo "🌐 Access Fleet Smart at: http://$(curl -s ifconfig.me):8069"
+        EOF
+
+    - name: Verify deployment
+      env:
+        HOSTNAME: ${{ secrets.EC2_HOST }}
+      run: |
+        echo "🔍 Verifying deployment..."
+        
+        # Test HTTP response
+        HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://$HOSTNAME:8069 || echo "000")
+        
+        if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "303" ]; then
+          echo "✅ Deployment verification successful!"
+          echo "🌐 Fleet Smart is accessible at: http://$HOSTNAME:8069"
+        else
+          echo "❌ Deployment verification failed (HTTP $HTTP_CODE)"
+          exit 1
+        fi
+
+    - name: Cleanup
+      if: always()
+      run: |
+        rm -f private_key
+
+  notify:
+    needs: [test, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Notify deployment status
+      env:
+        HOSTNAME: ${{ secrets.EC2_HOST }}
+      run: |
+        if [ "${{ needs.deploy.result }}" = "success" ]; then
+          echo "✅ Fleet Smart deployment successful!"
+          echo "🌐 Access your app at: http://$HOSTNAME:8069"
+          echo "📋 Next steps:"
+          echo "   1. Create a database"
+          echo "   2. Install the Fleet Smart app"
+          echo "   3. Start managing your EV fleet!"
+        else
+          echo "❌ Fleet Smart deployment failed!"
+          echo "Please check the logs and try again."
+        fi
