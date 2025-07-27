@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Homepage Template -->
+    <template id="homepage" name="Fleet Smart Homepage">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <!-- Hero Section -->
+                <section class="hero-section bg-primary text-white py-5">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <h1 class="display-4 fw-bold mb-4">Fleet Smart</h1>
+                                <p class="lead mb-4">Advanced Electric Vehicle Fleet Management</p>
+                                <p class="mb-4">Monitor your EV fleet in real-time with battery tracking, location monitoring, and intelligent scheduling.</p>
+                                <a href="/fleet" class="btn btn-light btn-lg me-3">View Fleet</a>
+                                <a href="/about" class="btn btn-outline-light btn-lg">Learn More</a>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="stats-grid">
+                                    <div class="stat-card bg-white text-dark p-4 rounded mb-3">
+                                        <h3 class="text-primary"><t t-esc="total_vehicles"/></h3>
+                                        <p class="mb-0">Total Vehicles</p>
+                                    </div>
+                                    <div class="stat-card bg-white text-dark p-4 rounded mb-3">
+                                        <h3 class="text-success"><t t-esc="available_vehicles"/></h3>
+                                        <p class="mb-0">Available Now</p>
+                                    </div>
+                                    <div class="stat-card bg-white text-dark p-4 rounded">
+                                        <h3 class="text-info"><t t-esc="avg_battery"/>%</h3>
+                                        <p class="mb-0">Average Battery</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section class="features-section py-5">
+                    <div class="container">
+                        <div class="row text-center mb-5">
+                            <div class="col-12">
+                                <h2 class="display-5 fw-bold">Why Choose Fleet Smart?</h2>
+                                <p class="lead text-muted">Everything you need to manage your electric vehicle fleet</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="feature-card text-center p-4">
+                                    <div class="feature-icon mb-3">
+                                        <i class="fa fa-battery-full fa-3x text-success"></i>
+                                    </div>
+                                    <h4>Battery Monitoring</h4>
+                                    <p class="text-muted">Real-time battery level tracking for all vehicles in your fleet.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="feature-card text-center p-4">
+                                    <div class="feature-icon mb-3">
+                                        <i class="fa fa-map-marker fa-3x text-primary"></i>
+                                    </div>
+                                    <h4>Location Tracking</h4>
+                                    <p class="text-muted">Know where your vehicles are at all times with GPS integration.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="feature-card text-center p-4">
+                                    <div class="feature-icon mb-3">
+                                        <i class="fa fa-users fa-3x text-info"></i>
+                                    </div>
+                                    <h4>Driver Management</h4>
+                                    <p class="text-muted">Assign drivers and track vehicle usage efficiently.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fleet Preview -->
+                <section class="fleet-preview bg-light py-5">
+                    <div class="container">
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <h2 class="display-5 fw-bold">Our Fleet</h2>
+                                <p class="lead text-muted">Current vehicles in operation</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <t t-foreach="vehicles[:3]" t-as="vehicle">
+                                <div class="col-md-4 mb-4">
+                                    <div class="vehicle-card bg-white rounded shadow p-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h5 class="mb-0"><t t-esc="vehicle.license_plate"/></h5>
+                                            <span t-attf-class="badge bg-#{vehicle.status == 'available' and 'success' or vehicle.status == 'in_use' and 'warning' or 'secondary'}">
+                                                <t t-esc="vehicle.status.replace('_', ' ').title()"/>
+                                            </span>
+                                        </div>
+                                        <p class="text-muted mb-2"><i class="fa fa-car me-2"></i><t t-esc="vehicle.model"/></p>
+                                        <p class="text-muted mb-2"><i class="fa fa-user me-2"></i><t t-esc="vehicle.driver"/></p>
+                                        <p class="text-muted mb-3"><i class="fa fa-map-marker me-2"></i><t t-esc="vehicle.location"/></p>
+                                        <div class="battery-indicator">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <span>Battery Level</span>
+                                                <span><t t-esc="vehicle.battery_level"/>%</span>
+                                            </div>
+                                            <div class="progress">
+                                                <div t-attf-class="progress-bar bg-#{vehicle.battery_level > 50 and 'success' or vehicle.battery_level > 20 and 'warning' or 'danger'}" 
+                                                     t-attf-style="width: #{vehicle.battery_level}%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="text-center">
+                            <a href="/fleet" class="btn btn-primary btn-lg">View All Vehicles</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Fleet Overview Template -->
+    <template id="fleet_overview" name="Fleet Overview">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h1 class="display-4 fw-bold text-center mb-4">Our Fleet</h1>
+                                <p class="lead text-center text-muted">Complete overview of all vehicles</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <t t-foreach="vehicles" t-as="vehicle">
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="vehicle-card bg-white rounded shadow p-4 h-100">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h4 class="mb-0"><t t-esc="vehicle.license_plate"/></h4>
+                                            <span t-attf-class="badge bg-#{vehicle.status == 'available' and 'success' or vehicle.status == 'in_use' and 'warning' or 'secondary'} fs-6">
+                                                <t t-esc="vehicle.status.replace('_', ' ').title()"/>
+                                            </span>
+                                        </div>
+                                        <div class="vehicle-details mb-4">
+                                            <p class="mb-2"><i class="fa fa-car me-2 text-primary"></i><strong><t t-esc="vehicle.model"/></strong></p>
+                                            <p class="mb-2"><i class="fa fa-user me-2 text-info"></i><t t-esc="vehicle.driver"/></p>
+                                            <p class="mb-3"><i class="fa fa-map-marker me-2 text-danger"></i><t t-esc="vehicle.location"/></p>
+                                        </div>
+                                        <div class="battery-section">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="fw-bold">Battery Level</span>
+                                                <span class="fw-bold"><t t-esc="vehicle.battery_level"/>%</span>
+                                            </div>
+                                            <div class="progress mb-3" style="height: 10px;">
+                                                <div t-attf-class="progress-bar bg-#{vehicle.battery_level > 50 and 'success' or vehicle.battery_level > 20 and 'warning' or 'danger'}" 
+                                                     t-attf-style="width: #{vehicle.battery_level}%"></div>
+                                            </div>
+                                        </div>
+                                        <a t-attf-href="/vehicle/#{vehicle.id}" class="btn btn-outline-primary w-100">View Details</a>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Vehicle Detail Template -->
+    <template id="vehicle_detail" name="Vehicle Detail">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="vehicle-detail-card bg-white rounded shadow p-5">
+                                    <div class="text-center mb-4">
+                                        <h1 class="display-4 fw-bold text-primary"><t t-esc="vehicle.license_plate"/></h1>
+                                        <span t-attf-class="badge bg-#{vehicle.status == 'available' and 'success' or vehicle.status == 'in_use' and 'warning' or 'secondary'} fs-5 px-3 py-2">
+                                            <t t-esc="vehicle.status.replace('_', ' ').title()"/>
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="info-item mb-3">
+                                                <h5><i class="fa fa-car me-2 text-primary"></i>Vehicle Model</h5>
+                                                <p class="fs-4 mb-0"><t t-esc="vehicle.model"/></p>
+                                            </div>
+                                            <div class="info-item mb-3">
+                                                <h5><i class="fa fa-user me-2 text-info"></i>Driver</h5>
+                                                <p class="fs-4 mb-0"><t t-esc="vehicle.driver"/></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="info-item mb-3">
+                                                <h5><i class="fa fa-map-marker me-2 text-danger"></i>Current Location</h5>
+                                                <p class="fs-4 mb-0"><t t-esc="vehicle.location"/></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="battery-section-large">
+                                        <h4 class="mb-3"><i class="fa fa-battery-full me-2 text-success"></i>Battery Status</h4>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span class="fs-5">Current Level</span>
+                                            <span class="fs-3 fw-bold"><t t-esc="vehicle.battery_level"/>%</span>
+                                        </div>
+                                        <div class="progress mb-4" style="height: 20px;">
+                                            <div t-attf-class="progress-bar bg-#{vehicle.battery_level > 50 and 'success' or vehicle.battery_level > 20 and 'warning' or 'danger'}" 
+                                                 t-attf-style="width: #{vehicle.battery_level}%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <a href="/fleet" class="btn btn-primary btn-lg me-3">Back to Fleet</a>
+                                        <a href="/" class="btn btn-outline-primary btn-lg">Home</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- About Page Template -->
+    <template id="about_page" name="About Fleet Smart">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto text-center">
+                                <h1 class="display-4 fw-bold mb-4">About Fleet Smart</h1>
+                                <p class="lead mb-5">The future of electric vehicle fleet management</p>
+                                
+                                <div class="about-content text-start">
+                                    <h3>Our Mission</h3>
+                                    <p class="mb-4">Fleet Smart is dedicated to revolutionizing electric vehicle fleet management through innovative technology and real-time monitoring solutions.</p>
+                                    
+                                    <h3>Key Features</h3>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Real-time battery monitoring</li>
+                                        <li class="mb-2"><i class="fa fa-check text-success me-2"></i>GPS location tracking</li>
+                                        <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Driver management system</li>
+                                        <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Automated reporting</li>
+                                        <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Mobile-friendly interface</li>
+                                    </ul>
+                                    
+                                    <h3>Technology</h3>
+                                    <p class="mb-4">Built on Odoo 17 with modern web technologies, deployed on AWS cloud infrastructure for maximum reliability and scalability.</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <a href="/fleet" class="btn btn-primary btn-lg me-3">View Our Fleet</a>
+                                    <a href="/contact" class="btn btn-outline-primary btn-lg">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Contact Page Template -->
+    <template id="contact_page" name="Contact Fleet Smart">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="text-center mb-5">
+                                    <h1 class="display-4 fw-bold">Contact Us</h1>
+                                    <p class="lead">Get in touch with the Fleet Smart team</p>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="contact-info">
+                                            <h4><i class="fa fa-envelope me-2 text-primary"></i>Email</h4>
+                                            <p>info@fleetsmart.com</p>
+                                            
+                                            <h4><i class="fa fa-phone me-2 text-primary"></i>Phone</h4>
+                                            <p>+1 (555) 123-4567</p>
+                                            
+                                            <h4><i class="fa fa-map-marker me-2 text-primary"></i>Address</h4>
+                                            <p>123 EV Street<br/>Electric City, EC 12345</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="contact-form">
+                                            <h4>Send us a message</h4>
+                                            <form>
+                                                <div class="mb-3">
+                                                    <input type="text" class="form-control" placeholder="Your Name" required=""/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <input type="email" class="form-control" placeholder="Your Email" required=""/>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <textarea class="form-control" rows="5" placeholder="Your Message" required=""></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>
