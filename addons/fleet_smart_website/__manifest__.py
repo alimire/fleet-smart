@@ -8,7 +8,6 @@
     'depends': ['website', 'fleet_smart'],
     'data': [
         'views/website_templates.xml',
-        'views/website_pages.xml',
         'data/website_data.xml',
     ],
     'assets': {
@@ -18,5 +17,6 @@
         ],
     },
     'installable': True,
-    'application': False,
+    'application': True,
+    'auto_install': False,
 }

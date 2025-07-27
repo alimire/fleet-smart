@@ -2,6 +2,47 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Replace footer content with custom Hubsiimotech footer
+    function replaceFooter() {
+        const footer = document.querySelector('footer');
+        if (footer) {
+            footer.innerHTML = `
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="text-white">Fleet Smart</h5>
+                            <p class="text-muted">Advanced Electric Vehicle Fleet Management</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-white">Quick Links</h6>
+                            <ul class="list-unstyled">
+                                <li><a href="/" class="text-muted">Home</a></li>
+                                <li><a href="/fleet" class="text-muted">Fleet</a></li>
+                                <li><a href="/about" class="text-muted">About</a></li>
+                                <li><a href="/contact" class="text-muted">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div class="d-flex align-items-center justify-content-md-end mb-3">
+                                <span class="me-2 text-muted">Powered by</span>
+                                <img src="/fleet_smart_website/static/img/hubsiimotech-logo.svg" alt="Hubsiimotech" style="height: 30px;"/>
+                            </div>
+                            <p class="text-muted small">© 2025 Fleet Smart. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            footer.style.background = '#1A2332';
+            footer.style.color = 'white';
+            footer.style.padding = '2rem 0';
+        }
+    }
+
+    // Replace footer immediately and after delays to ensure it loads
+    replaceFooter();
+    setTimeout(replaceFooter, 500);
+    setTimeout(replaceFooter, 1000);
+    
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {

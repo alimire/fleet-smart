@@ -1,0 +1,30 @@
+<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="30" cy="30" r="25" fill="#00D084" stroke="#00A86B" stroke-width="2"/>
+  
+  <!-- Lightning bolt -->
+  <path d="M20 18 L28 18 L24 30 L32 30 L22 42 L26 30 L18 30 L20 18 Z" 
+        fill="#FFFFFF" stroke="#E8FFF4" stroke-width="0.5"/>
+  
+  <!-- Car silhouette -->
+  <g transform="translate(65, 20)">
+    <!-- Car body -->
+    <rect x="0" y="8" width="45" height="12" rx="6" fill="#1A2332"/>
+    <!-- Windshield -->
+    <rect x="8" y="4" width="12" height="8" rx="2" fill="#2D3748"/>
+    <rect x="25" y="4" width="12" height="8" rx="2" fill="#2D3748"/>
+    <!-- Wheels -->
+    <circle cx="10" cy="22" r="4" fill="#1A1A1A"/>
+    <circle cx="35" cy="22" r="4" fill="#1A1A1A"/>
+    <circle cx="10" cy="22" r="2" fill="#00D084"/>
+    <circle cx="35" cy="22" r="2" fill="#00D084"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="65" y="45" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1A2332">
+    Fleet Smart
+  </text>
+  <text x="65" y="55" font-family="Arial, sans-serif" font-size="8" fill="#718096">
+    EV MANAGEMENT
+  </text>
+</svg>
