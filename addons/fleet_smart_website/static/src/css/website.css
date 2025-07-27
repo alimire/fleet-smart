@@ -415,7 +415,9 @@ footer::after {
     background: var(--dark-slate) !important;
     color: white !important;
     padding: 2rem 0 !important;
-    margin-top: auto !important;
+    margin-top: 2rem !important;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .custom-footer h5 {
