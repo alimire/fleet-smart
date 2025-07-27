@@ -10,7 +10,7 @@ services:
       - db_data:/var/lib/postgresql/data
 
   odoo:
-    image: odoo-fleet-app
+    build: .
     ports:
       - "8069:8069"
     depends_on:
