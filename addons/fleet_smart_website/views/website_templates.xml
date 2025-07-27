@@ -99,22 +99,21 @@
                                 <div class="col-md-4 mb-4">
                                     <div class="vehicle-card bg-white rounded shadow p-4">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h5 class="mb-0"><t t-esc="vehicle.license_plate"/></h5>
-                                            <span t-attf-class="badge bg-#{vehicle.status == 'available' and 'success' or vehicle.status == 'in_use' and 'warning' or 'secondary'}">
-                                                <t t-esc="vehicle.status.replace('_', ' ').title()"/>
+                                            <h5 class="mb-0"><t t-esc="vehicle.license_plate or 'N/A'"/></h5>
+                                            <span class="badge bg-success">
+                                                <t t-esc="vehicle.state_id.name if vehicle.state_id else 'Active'"/>
                                             </span>
                                         </div>
-                                        <p class="text-muted mb-2"><i class="fa fa-car me-2"></i><t t-esc="vehicle.model"/></p>
-                                        <p class="text-muted mb-2"><i class="fa fa-user me-2"></i><t t-esc="vehicle.driver"/></p>
-                                        <p class="text-muted mb-3"><i class="fa fa-map-marker me-2"></i><t t-esc="vehicle.location"/></p>
+                                        <p class="text-muted mb-2"><i class="fa fa-car me-2"></i><t t-esc="vehicle.model_id.name if vehicle.model_id else 'Unknown Model'"/></p>
+                                        <p class="text-muted mb-2"><i class="fa fa-user me-2"></i><t t-esc="vehicle.driver_id.name if vehicle.driver_id else 'Unassigned'"/></p>
+                                        <p class="text-muted mb-3"><i class="fa fa-map-marker me-2"></i><t t-esc="vehicle.location or 'Unknown Location'"/></p>
                                         <div class="battery-indicator">
                                             <div class="d-flex justify-content-between mb-1">
                                                 <span>Battery Level</span>
-                                                <span><t t-esc="vehicle.battery_level"/>%</span>
+                                                <span>85%</span>
                                             </div>
                                             <div class="progress">
-                                                <div t-attf-class="progress-bar bg-#{vehicle.battery_level > 50 and 'success' or vehicle.battery_level > 20 and 'warning' or 'danger'}" 
-                                                     t-attf-style="width: #{vehicle.battery_level}%"></div>
+                                                <div class="progress-bar bg-success" style="width: 85%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -166,24 +165,23 @@
                                 <div class="col-lg-4 col-md-6 mb-4">
                                     <div class="vehicle-card bg-white rounded shadow p-4 h-100">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h4 class="mb-0"><t t-esc="vehicle.license_plate"/></h4>
-                                            <span t-attf-class="badge bg-#{vehicle.status == 'available' and 'success' or vehicle.status == 'in_use' and 'warning' or 'secondary'} fs-6">
-                                                <t t-esc="vehicle.status.replace('_', ' ').title()"/>
+                                            <h4 class="mb-0"><t t-esc="vehicle.license_plate or 'N/A'"/></h4>
+                                            <span class="badge bg-success fs-6">
+                                                <t t-esc="vehicle.state_id.name if vehicle.state_id else 'Active'"/>
                                             </span>
                                         </div>
                                         <div class="vehicle-details mb-4">
-                                            <p class="mb-2"><i class="fa fa-car me-2 text-primary"></i><strong><t t-esc="vehicle.model"/></strong></p>
-                                            <p class="mb-2"><i class="fa fa-user me-2 text-info"></i><t t-esc="vehicle.driver"/></p>
-                                            <p class="mb-3"><i class="fa fa-map-marker me-2 text-danger"></i><t t-esc="vehicle.location"/></p>
+                                            <p class="mb-2"><i class="fa fa-car me-2 text-primary"></i><strong><t t-esc="vehicle.model_id.name if vehicle.model_id else 'Unknown Model'"/></strong></p>
+                                            <p class="mb-2"><i class="fa fa-user me-2 text-info"></i><t t-esc="vehicle.driver_id.name if vehicle.driver_id else 'Unassigned'"/></p>
+                                            <p class="mb-3"><i class="fa fa-map-marker me-2 text-danger"></i><t t-esc="vehicle.location or 'Unknown Location'"/></p>
                                         </div>
                                         <div class="battery-section">
                                             <div class="d-flex justify-content-between mb-2">
                                                 <span class="fw-bold">Battery Level</span>
-                                                <span class="fw-bold"><t t-esc="vehicle.battery_level"/>%</span>
+                                                <span class="fw-bold">85%</span>
                                             </div>
                                             <div class="progress mb-3" style="height: 10px;">
-                                                <div t-attf-class="progress-bar bg-#{vehicle.battery_level > 50 and 'success' or vehicle.battery_level > 20 and 'warning' or 'danger'}" 
-                                                     t-attf-style="width: #{vehicle.battery_level}%"></div>
+                                                <div class="progress-bar bg-success" style="width: 85%"></div>
                                             </div>
                                         </div>
                                         <a t-attf-href="/vehicle/#{vehicle.id}" class="btn btn-outline-primary w-100">View Details</a>
@@ -207,9 +205,9 @@
                             <div class="col-lg-8 mx-auto">
                                 <div class="vehicle-detail-card bg-white rounded shadow p-5">
                                     <div class="text-center mb-4">
-                                        <h1 class="display-4 fw-bold text-primary"><t t-esc="vehicle.license_plate"/></h1>
-                                        <span t-attf-class="badge bg-#{vehicle.status == 'available' and 'success' or vehicle.status == 'in_use' and 'warning' or 'secondary'} fs-5 px-3 py-2">
-                                            <t t-esc="vehicle.status.replace('_', ' ').title()"/>
+                                        <h1 class="display-4 fw-bold text-primary"><t t-esc="vehicle.license_plate or 'N/A'"/></h1>
+                                        <span class="badge bg-success fs-5 px-3 py-2">
+                                            <t t-esc="vehicle.state_id.name if vehicle.state_id else 'Active'"/>
                                         </span>
                                     </div>
                                     
@@ -217,17 +215,17 @@
                                         <div class="col-md-6">
                                             <div class="info-item mb-3">
                                                 <h5><i class="fa fa-car me-2 text-primary"></i>Vehicle Model</h5>
-                                                <p class="fs-4 mb-0"><t t-esc="vehicle.model"/></p>
+                                                <p class="fs-4 mb-0"><t t-esc="vehicle.model_id.name if vehicle.model_id else 'Unknown Model'"/></p>
                                             </div>
                                             <div class="info-item mb-3">
                                                 <h5><i class="fa fa-user me-2 text-info"></i>Driver</h5>
-                                                <p class="fs-4 mb-0"><t t-esc="vehicle.driver"/></p>
+                                                <p class="fs-4 mb-0"><t t-esc="vehicle.driver_id.name if vehicle.driver_id else 'Unassigned'"/></p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="info-item mb-3">
                                                 <h5><i class="fa fa-map-marker me-2 text-danger"></i>Current Location</h5>
-                                                <p class="fs-4 mb-0"><t t-esc="vehicle.location"/></p>
+                                                <p class="fs-4 mb-0"><t t-esc="vehicle.location or 'Unknown Location'"/></p>
                                             </div>
                                         </div>
                                     </div>
@@ -236,11 +234,10 @@
                                         <h4 class="mb-3"><i class="fa fa-battery-full me-2 text-success"></i>Battery Status</h4>
                                         <div class="d-flex justify-content-between mb-2">
                                             <span class="fs-5">Current Level</span>
-                                            <span class="fs-3 fw-bold"><t t-esc="vehicle.battery_level"/>%</span>
+                                            <span class="fs-3 fw-bold">85%</span>
                                         </div>
                                         <div class="progress mb-4" style="height: 20px;">
-                                            <div t-attf-class="progress-bar bg-#{vehicle.battery_level > 50 and 'success' or vehicle.battery_level > 20 and 'warning' or 'danger'}" 
-                                                 t-attf-style="width: #{vehicle.battery_level}%"></div>
+                                            <div class="progress-bar bg-success" style="width: 85%"></div>
                                         </div>
                                     </div>
                                     
@@ -297,35 +294,22 @@
         </t>
     </template>
 
-    <!-- Override Footer Content -->
-    <template id="website_footer_override" inherit_id="website.footer_custom" name="Custom Footer Content">
-        <xpath expr="//footer" position="replace">
-            <footer class="bg-dark text-light py-4">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h5 class="text-white">Fleet Smart</h5>
-                            <p class="text-muted">Advanced Electric Vehicle Fleet Management</p>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="text-white">Quick Links</h6>
-                            <ul class="list-unstyled">
-                                <li><a href="/" class="text-muted">Home</a></li>
-                                <li><a href="/fleet" class="text-muted">Fleet</a></li>
-                                <li><a href="/about" class="text-muted">About</a></li>
-                                <li><a href="/contact" class="text-muted">Contact</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 text-md-end">
-                            <div class="d-flex align-items-center justify-content-md-end mb-3">
-                                <span class="me-2 text-muted">Powered by</span>
-                                <img src="/fleet_smart_website/static/img/hubsiimotech-logo.svg" alt="Hubsiimotech" style="height: 30px;"/>
-                            </div>
-                            <p class="text-muted small">© 2025 Fleet Smart. All rights reserved.</p>
-                        </div>
+    <!-- Simplified Footer Override -->
+    <template id="website_footer_override" inherit_id="website.layout" name="Custom Footer Content">
+        <xpath expr="//div[@id='footer']//div[hasclass('container')]" position="replace">
+            <div class="container">
+                <div class="row py-3">
+                    <div class="col-md-6">
+                        <h6>Fleet Smart</h6>
+                        <p class="small text-muted">Advanced Electric Vehicle Fleet Management</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="small text-muted">
+                            Powered by <strong>Hubsiimotech</strong> | © 2025 Fleet Smart
+                        </p>
                     </div>
                 </div>
-            </footer>
+            </div>
         </xpath>
     </template>
 

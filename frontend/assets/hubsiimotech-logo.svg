@@ -1,0 +1,36 @@
+<svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tech circuit design -->
+  <g transform="translate(20, 15)">
+    <!-- Main circle -->
+    <circle cx="35" cy="25" r="12" fill="none" stroke="#00BFFF" stroke-width="2"/>
+    <circle cx="35" cy="25" r="6" fill="none" stroke="#00BFFF" stroke-width="2"/>
+    <circle cx="35" cy="25" r="2" fill="#00BFFF"/>
+    
+    <!-- Connection lines -->
+    <line x1="10" y1="15" x2="23" y2="20" stroke="#00BFFF" stroke-width="2"/>
+    <line x1="10" y1="25" x2="23" y2="25" stroke="#00BFFF" stroke-width="2"/>
+    <line x1="10" y1="35" x2="23" y2="30" stroke="#00BFFF" stroke-width="2"/>
+    
+    <line x1="47" y1="15" x2="60" y2="10" stroke="#00BFFF" stroke-width="2"/>
+    <line x1="47" y1="20" x2="55" y2="18" stroke="#00BFFF" stroke-width="2"/>
+    <line x1="47" y1="30" x2="55" y2="32" stroke="#00BFFF" stroke-width="2"/>
+    <line x1="47" y1="35" x2="60" y2="40" stroke="#00BFFF" stroke-width="2"/>
+    
+    <!-- Connection nodes -->
+    <circle cx="10" cy="15" r="2" fill="#00BFFF"/>
+    <circle cx="10" cy="25" r="2" fill="#00BFFF"/>
+    <circle cx="10" cy="35" r="2" fill="#00BFFF"/>
+    <circle cx="60" cy="10" r="2" fill="#00BFFF"/>
+    <circle cx="55" cy="18" r="2" fill="#00BFFF"/>
+    <circle cx="55" cy="32" r="2" fill="#00BFFF"/>
+    <circle cx="60" cy="40" r="2" fill="#00BFFF"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="20" y="65" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
+    <tspan fill="#00BFFF">HUB</tspan><tspan fill="#FFD700">Sii</tspan><tspan fill="#FF6347">MO</tspan>
+  </text>
+  <text x="20" y="75" font-family="Arial, sans-serif" font-size="8" fill="#00BFFF" letter-spacing="2px">
+    TECHNOLOGY
+  </text>
+</svg>

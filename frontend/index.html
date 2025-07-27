@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Smart - Advanced EV Fleet Management</title>
+    <meta name="description" content="Monitor your electric vehicle fleet in real-time with battery tracking, location monitoring, and intelligent scheduling.">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="./css/style.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/fleet-smart-logo.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <img src="./assets/fleet-smart-logo.svg" alt="Fleet Smart" class="navbar-logo">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#fleet">Fleet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="#contact" class="btn btn-primary ms-3">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4 text-white">Fleet Smart</h1>
+                    <p class="lead mb-4 text-white">Advanced Electric Vehicle Fleet Management</p>
+                    <p class="mb-4 text-white">Monitor your EV fleet in real-time with battery tracking, location monitoring, and intelligent scheduling.</p>
+                    <div class="hero-buttons">
+                        <a href="#fleet" class="btn btn-light btn-lg me-3">View Fleet</a>
+                        <a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="stats-grid">
+                        <div class="stat-card glass-effect p-4 rounded mb-3">
+                            <h3 class="stat-number" id="total-vehicles">-</h3>
+                            <p class="mb-0">Total Vehicles</p>
+                        </div>
+                        <div class="stat-card glass-effect p-4 rounded mb-3">
+                            <h3 class="stat-number text-success" id="available-vehicles">-</h3>
+                            <p class="mb-0">Available Now</p>
+                        </div>
+                        <div class="stat-card glass-effect p-4 rounded">
+                            <h3 class="stat-number text-info" id="avg-battery">-%</h3>
+                            <p class="mb-0">Average Battery</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-5 fw-bold">Why Choose Fleet Smart?</h2>
+                    <p class="lead text-muted">Everything you need to manage your electric vehicle fleet</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fa fa-battery-full fa-3x"></i>
+                        </div>
+                        <h4>Battery Monitoring</h4>
+                        <p class="text-muted">Real-time battery level tracking for all vehicles in your fleet.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fa fa-map-marker fa-3x"></i>
+                        </div>
+                        <h4>Location Tracking</h4>
+                        <p class="text-muted">Know where your vehicles are at all times with GPS integration.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fa fa-users fa-3x"></i>
+                        </div>
+                        <h4>Driver Management</h4>
+                        <p class="text-muted">Assign drivers and track vehicle usage efficiently.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section id="fleet" class="fleet-section py-5">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="display-5 fw-bold">Our Fleet</h2>
+                    <p class="lead text-muted">Current vehicles in operation</p>
+                </div>
+            </div>
+            <div class="row" id="fleet-vehicles">
+                <!-- Vehicles will be loaded here -->
+                <div class="col-12 text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading fleet data...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="display-5 fw-bold mb-4">About Fleet Smart</h2>
+                    <p class="lead mb-5">The future of electric vehicle fleet management</p>
+                    
+                    <div class="about-content text-start">
+                        <h3>Our Mission</h3>
+                        <p class="mb-4">Fleet Smart is dedicated to revolutionizing electric vehicle fleet management through innovative technology and real-time monitoring solutions.</p>
+                        
+                        <h3>Key Features</h3>
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Real-time battery monitoring</li>
+                            <li class="mb-2"><i class="fa fa-check text-success me-2"></i>GPS location tracking</li>
+                            <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Driver management system</li>
+                            <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Automated reporting</li>
+                            <li class="mb-2"><i class="fa fa-check text-success me-2"></i>Mobile-friendly interface</li>
+                        </ul>
+                        
+                        <h3>Technology</h3>
+                        <p class="mb-4">Built with modern web technologies and powered by advanced fleet management systems, deployed on cloud infrastructure for maximum reliability and scalability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="text-center mb-5">
+                        <h2 class="display-5 fw-bold">Contact Us</h2>
+                        <p class="lead">Get in touch with the Fleet Smart team</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="contact-info">
+                                <h4><i class="fa fa-envelope me-2 text-primary"></i>Email</h4>
+                                <p>info@fleetsmart.com</p>
+                                
+                                <h4><i class="fa fa-phone me-2 text-primary"></i>Phone</h4>
+                                <p>+1 (555) 123-4567</p>
+                                
+                                <h4><i class="fa fa-map-marker me-2 text-primary"></i>Address</h4>
+                                <p>123 EV Street<br/>Electric City, EC 12345</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="contact-form">
+                                <h4>Send us a message</h4>
+                                <form id="contact-form">
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control" placeholder="Your Email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Fleet Smart</h5>
+                    <p class="text-muted">Advanced Electric Vehicle Fleet Management</p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-muted">Home</a></li>
+                        <li><a href="#fleet" class="text-muted">Fleet</a></li>
+                        <li><a href="#about" class="text-muted">About</a></li>
+                        <li><a href="#contact" class="text-muted">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex align-items-center justify-content-md-end mb-3">
+                        <span class="me-2 text-muted">Powered by</span>
+                        <img src="./assets/hubsiimotech-logo.svg" alt="Hubsiimotech" class="hubsiimotech-logo">
+                    </div>
+                    <p class="text-muted small">© 2025 Fleet Smart. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="./js/main.js"></script>
+</body>
+</html>

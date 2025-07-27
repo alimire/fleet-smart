@@ -1,0 +1,6 @@
+# Netlify redirects file
+# Proxy API calls to your Odoo backend
+/api/* https://your-odoo-backend.com/:splat 200
+
+# SPA fallback
+/* /index.html 200
