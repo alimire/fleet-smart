@@ -1,7 +1,7 @@
 {
     'name': 'Fleet Smart',
     'version': '1.0',
-    'summary': 'Smart EV Fleet Management',
+    'summary': 'Smart EV Fleet Management - Auto Deployed!',
     'category': 'Fleet',
     'author': 'You',
     'license': 'LGPL-3',
